@@ -44,14 +44,14 @@ jobs:
       - name: Checkout nhoriguchi/manifest_sample
         uses: actions/checkout@v4
         with:
-          repository: https://github.com/nhoriguchi/manifest_sample
+          repository: nhoriguchi/manifest_sample
           ref: main
       - name: Update fastapi-sample image
         env:
           IMAGE_FULL_NAME: ${{ needs.build-and-push-image.outputs.IMAGE_FULL_NAME }}
         run: |
           echo "hello"
-          yq -i "(.spec.template.spec.containers[] | select(.name == \"fastapi-sample\")).image = \"$IMAGE_FULL_NAME\"" manifests/fastapi-sample/deployment.yaml
+          yq -i "(.spec.template.spec.containers[] | select(.name == \"fastapi-sample\")).image = \"$IMAGE_FULL_NAME\"" fastapi-sample/deployment.yaml
       - name: Create PR
         uses: peter-evans/create-pull-request@v5
         with:
